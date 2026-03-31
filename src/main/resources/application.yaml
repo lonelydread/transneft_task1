@@ -1,3 +1,11 @@
+server:
+  port: 8080
+
+python:
+  service:
+    url: http://localhost:8000
+
+# отключаем открытие браузера
 spring:
-  application:
-    name: task1
+  main:
+    web-application-type: servlet
