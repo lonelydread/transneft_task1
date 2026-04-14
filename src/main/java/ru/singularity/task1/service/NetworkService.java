@@ -83,7 +83,7 @@ public class NetworkService {
         n("35", CONSUMER, 330, 330);
         n("36", CONSUMER, 265, 255);
         n("27", CONSUMER, 150, 355);
-        n("37", CONSUMER, 380, 150);
+        n("37", CONSUMER, 380, 120);
         n("32", CONSUMER, 460, 235);
         n("30", CONSUMER, 710, 230);
         n("31", CONSUMER, 750, 210);
@@ -134,8 +134,8 @@ public class NetworkService {
         n("21", CONSUMER,  415, 500);
         n("28", CONSUMER,  400, 600);
         n("3",  CONSUMER,  360, 480);
-        n("17", CONSUMER,  210, 510);
-        n("18", CONSUMER,  185, 540);
+        n("17", CONSUMER,  205, 505);
+        n("18", CONSUMER,  170, 540);
         n("13", CONSUMER,  150, 600);
         n("14", CONSUMER,  160, 670);
         n("25", CONSUMER,  70, 570);

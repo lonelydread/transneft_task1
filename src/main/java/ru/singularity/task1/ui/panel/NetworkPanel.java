@@ -142,7 +142,7 @@ public class NetworkPanel extends JPanel {
 	private int nodeWidth(NetworkNode node) {
 		return switch (node.getType()) {
 			case SOURCE -> 64;
-			case CONSUMER -> 30;
+			case CONSUMER -> 42;
 			case JUNCTION -> 36;
 		};
 	}
@@ -150,7 +150,7 @@ public class NetworkPanel extends JPanel {
 	private int nodeHeight(NetworkNode node) {
 		return switch (node.getType()) {
 			case SOURCE -> 34;
-			case CONSUMER -> 30;
+			case CONSUMER -> 42;
 			case JUNCTION -> 36;
 		};
 	}
