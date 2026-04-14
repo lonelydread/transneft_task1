@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import ru.singularity.task1.model.OptimizationRequest;
-import ru.singularity.task1.model.OptimizationResult;
+//import ru.singularity.task1.model.OptimizationRequest;
+//import ru.singularity.task1.model.OptimizationResult;
 
 import java.util.ArrayList;
 
