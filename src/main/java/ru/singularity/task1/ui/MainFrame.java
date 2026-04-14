@@ -1,6 +1,5 @@
 package ru.singularity.task1.ui;
 
-import org.springframework.stereotype.Component;
 import ru.singularity.task1.ui.panel.ControlPanel;
 import ru.singularity.task1.ui.panel.NetworkPanel;
 import ru.singularity.task1.ui.panel.ResultPanel;
@@ -10,7 +9,6 @@ import javax.swing.WindowConstants;
 import java.awt.*;
 
 // ui/MainFrame.java
-@Component                          // ← Spring управляет жизненным циклом
 public class MainFrame extends JFrame {
 
 	private final NetworkPanel networkPanel;

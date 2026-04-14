@@ -63,6 +63,85 @@ public class NetworkPanel extends JPanel {
 		}
 	}
 
+	// Источник питания — прямоугольник с символом ||
+	private void drawSource(Graphics2D g2, NetworkNode node) {
+		int x = (int) node.getX();
+		int y = (int) node.getY();
+
+		// Прямоугольник с подписью
+		int w = 50, h = 24;
+		g2.setColor(new Color(230, 245, 255));
+		g2.fillRoundRect(x - w/2, y - h/2, w, h, 6, 6);
+		g2.setColor(new Color(24, 95, 165));
+		g2.setStroke(new BasicStroke(1.2f));
+		g2.drawRoundRect(x - w/2, y - h/2, w, h, 6, 6);
+
+		// ID узла внутри прямоугольника
+		g2.setFont(new Font("Arial", Font.BOLD, 10));
+		g2.setColor(new Color(12, 68, 124));
+		FontMetrics fm = g2.getFontMetrics();
+		g2.drawString(node.getId(),
+				x - fm.stringWidth(node.getId()) / 2,
+				y + fm.getAscent() / 2 - 1
+		);
+
+		// Символ источника || над прямоугольником
+		g2.setColor(new Color(24, 95, 165));
+		g2.setStroke(new BasicStroke(2.0f));
+		g2.drawLine(x - 5, y - h/2 - 10, x - 5, y - h/2 - 2);  // левая черта
+		g2.drawLine(x + 5, y - h/2 - 10, x + 5, y - h/2 - 2);  // правая черта
+
+		// Мощность источника под прямоугольником
+		if (node.getCapacity() > 0) {
+			g2.setFont(new Font("Arial", Font.PLAIN, 9));
+			g2.setColor(Color.DARK_GRAY);
+			String cap = String.format("%.0f МВт", node.getCapacity());
+			g2.drawString(cap,
+					x - fm.stringWidth(cap) / 2,
+					y + h/2 + 12
+			);
+		}
+	}
+
+	// Потребитель — перечёркнутый круг (⊗) с синей точкой
+	private void drawConsumer(Graphics2D g2, NetworkNode node) {
+		int x = (int) node.getX();
+		int y = (int) node.getY();
+		int r = 10;
+
+		// Заливка круга
+		g2.setColor(new Color(240, 240, 240));
+		g2.fillOval(x - r, y - r, r * 2, r * 2);
+
+		// Обводка
+		g2.setColor(new Color(80, 80, 80));
+		g2.setStroke(new BasicStroke(1.2f));
+		g2.drawOval(x - r, y - r, r * 2, r * 2);
+
+		// Крест внутри круга (символ ⊗)
+		g2.drawLine(x - r + 3, y - r + 3, x + r - 3, y + r - 3);
+		g2.drawLine(x + r - 3, y - r + 3, x - r + 3, y + r - 3);
+
+		// Синяя точка — признак потребителя (как на схеме из PDF)
+		g2.setColor(new Color(55, 138, 221));
+		g2.fillOval(x - 4, y - 4, 8, 8);
+
+		// ID узла рядом
+		g2.setFont(new Font("Arial", Font.PLAIN, 10));
+		g2.setColor(Color.DARK_GRAY);
+		g2.drawString(node.getId(), x + r + 4, y + 4);
+
+		// Потребление под узлом
+		if (node.getDemand() > 0) {
+			g2.setFont(new Font("Arial", Font.PLAIN, 9));
+			g2.setColor(Color.GRAY);
+			g2.drawString(
+					String.format("%.0f МВт", node.getDemand()),
+					x - r, y + r + 12
+			);
+		}
+	}
+
 	private void drawJunction(Graphics2D g2, NetworkNode node) {
 		int r = 18;
 		g2.setColor(new Color(220, 50, 50, 50));

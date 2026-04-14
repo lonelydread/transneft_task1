@@ -29,23 +29,14 @@ public class ControlPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(220, 0));
 
-		JButton btnMaxFlow  = new JButton("Max Flow");
-		JButton btnMinCost  = new JButton("Min Cost Flow");
-		JButton btnForecast = new JButton("ML Прогноз");
 		JButton btnClear    = new JButton("Очистить сеть");
 
-		btnMaxFlow.addActionListener(e -> runOptimization("max_flow"));
-		btnMinCost.addActionListener(e -> runOptimization("min_cost"));
-		btnForecast.addActionListener(e -> runOptimization("ml_forecast"));
+
 		btnClear.addActionListener(e -> {
 			networkService.clearNetwork();
 			networkPanel.refresh();
 		});
 
-		add(btnMaxFlow);
-		add(btnMinCost);
-		add(btnForecast);
-		add(Box.createVerticalStrut(20));
 		add(btnClear);
 	}
 
