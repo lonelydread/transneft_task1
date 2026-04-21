@@ -30,14 +30,17 @@ public class ControlPanel extends JPanel {
 		setPreferredSize(new Dimension(100, 0));
 
 		JButton btnClear    = new JButton("Очистить сеть");
-
+		JButton btnPrintCoords = new JButton("Координаты");
 
 		btnClear.addActionListener(e -> {
 			networkService.clearNetwork();
 			networkPanel.refresh();
 		});
 
+		btnPrintCoords.addActionListener(e -> networkPanel.printCoordinates());
+
 		add(btnClear);
+		add(btnPrintCoords);
 	}
 
 //	private void runOptimization(String algorithm) {

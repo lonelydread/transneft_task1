@@ -70,116 +70,116 @@ public class NetworkService {
         // ── Верхний кластер ──────────────────────────────────────────────
 
         // Источники
-        n("N",  SOURCE,  0, 290);
-        n("O",  SOURCE, 90, 225);
-        n("L",  SOURCE, 640, 90);
-        n("K",  SOURCE, 620, 195);
-        n("J",  SOURCE, 270, 190);
-        n("F",  SOURCE, 940, 195);
-        n("G",  SOURCE, 1050, 215);
+        n("N",  SOURCE,   40, 290);
+        n("O",  SOURCE,  150, 210);
+        n("L",  SOURCE,  620, 120);
+        n("K",  SOURCE,  620, 170);
+        n("J",  SOURCE,  340, 220);
+        n("F",  SOURCE,  1070, 260);
+        n("G",  SOURCE, 1140, 260);
 
         // Потребители верхней части
-        n("1",  CONSUMER, 510,  25);
-        n("2",  CONSUMER, 610,  25);
-        n("38", CONSUMER, 565,  100);
-        n("15", CONSUMER, 215, 230);
-        n("16", CONSUMER, 215, 130);
-        n("35", CONSUMER, 330, 330);
-        n("36", CONSUMER, 285, 265);
-        n("27", CONSUMER, 150, 355);
-        n("37", CONSUMER, 380, 120);
-        n("32", CONSUMER, 460, 235);
-        n("30", CONSUMER, 710, 230);
-        n("31", CONSUMER, 790, 190);
-        n("33", CONSUMER, 565, 300);
-        n("34", CONSUMER, 590, 360);
-        n("19", CONSUMER, 195, 400);
-        n("20", CONSUMER, 195, 460);
+        n("1",  CONSUMER, 540, 10);
+        n("2",  CONSUMER, 640, 10);
+        n("38", CONSUMER, 590, 60);
+        n("15", CONSUMER, 220, 260);
+        n("16", CONSUMER, 260, 190);
+        n("35", CONSUMER, 290, 290);
+        n("36", CONSUMER, 350, 290);
+        n("27", CONSUMER, 130, 370);
+        n("37", CONSUMER, 410, 200);
+        n("32", CONSUMER, 490, 290);
+        n("30", CONSUMER, 800, 280);
+        n("31", CONSUMER, 860, 280);
+        n("33", CONSUMER, 630, 340);
+        n("34", CONSUMER, 670, 390);
+        n("19", CONSUMER, 120, 430);
+        n("20", CONSUMER, 140, 490);
 
         // Узлы соединения (верхняя часть)
-        n("XVI.",  JUNCTION, 525, 195);
-        n("IV.",   JUNCTION, 580, 230);
-        n("XVII.", JUNCTION, 510, 270);
-        n("III.",  JUNCTION, 670, 265);
-        n("I.",    JUNCTION, 800, 265);
-        n("II.",   JUNCTION, 960, 275);
-        n("VIII.", JUNCTION, 380, 200);
-        n("V.",    JUNCTION, 380, 265);
-        n("VI.",   JUNCTION, 230, 310);
-        n("VII.",  JUNCTION, 105, 300);
+        n("XVI.",  JUNCTION, 540, 180);
+        n("IV.",   JUNCTION, 650, 240);
+        n("XVII.", JUNCTION, 550, 360);
+        n("III.",  JUNCTION, 740, 350);
+        n("I.",    JUNCTION, 920, 350);
+        n("II.",   JUNCTION, 1080, 350);
+        n("VIII.", JUNCTION, 410, 270);
+        n("V.",    JUNCTION, 410, 360);
+        n("VI.",   JUNCTION, 230, 350);
+        n("VII.",  JUNCTION, 130, 320);
 
         // Промежуточные узлы (верхняя часть)
-        n("XVI_L",  INTERMEDIATE, 582, 142);
-        n("XVI_38", INTERMEDIATE, 545, 147);
-        n("V_32",   INTERMEDIATE, 420, 250);
-        n("III_33", INTERMEDIATE, 617, 282);
-        n("III_34", INTERMEDIATE, 630, 312);
-        n("I_30",   INTERMEDIATE, 755, 247);
-        n("I_31",   INTERMEDIATE, 795, 227);
-        n("VI_35",  INTERMEDIATE, 280, 320);
-        n("VI_36",  INTERMEDIATE, 257, 287);
+        n("XVI_L",  INTERMEDIATE, 550, 120);
+        n("XVI_38", INTERMEDIATE, 550, 70);
+        n("V_32",   INTERMEDIATE, 500, 370);
+        n("III_33", INTERMEDIATE, 700, 290);
+        n("III_34", INTERMEDIATE, 720, 320);
+        n("I_30",   INTERMEDIATE, 810, 360);
+        n("I_31",   INTERMEDIATE, 860, 360);
+        n("VI_35",  INTERMEDIATE, 310, 370);
+        n("VI_36",  INTERMEDIATE, 360, 370);
 
         // ── Нижний кластер ───────────────────────────────────────────────
 
         // Источники нижней части
-        n("A",  SOURCE, 1065, 490);
-        n("P",  SOURCE,  955, 490);
-        n("M",  SOURCE,  750, 485);
-        n("B",  SOURCE,  870, 630);
-        n("C",  SOURCE,  765, 630);
-        n("D",  SOURCE,  620, 480);
-        n("E",  SOURCE,  550, 480);
-        n("H",  SOURCE,  645, 345);  // источник, входящий в III.
-        n("I",  SOURCE,  390, 335);  // источник (буква I), входящий в V.
+        n("A",  SOURCE, 1120, 440);
+        n("P",  SOURCE,  980, 480);
+        n("M",  SOURCE,  850, 510);
+        n("B",  SOURCE,  870, 660);
+        n("C",  SOURCE,  800, 660);
+        n("D",  SOURCE,  620, 500);
+        n("E",  SOURCE,  550, 490);
+        n("H",  SOURCE,  740, 420);  // источник, входящий в III.
+        n("I",  SOURCE,  410, 420);  // источник (буква I), входящий в V.
 
         // Потребители нижней части
-        n("6",  CONSUMER, 1100, 545);
-        n("5",  CONSUMER,  1050, 620);
-        n("7",  CONSUMER, 1100, 630);
-        n("4",  CONSUMER,  1000, 660);
-        n("9",  CONSUMER,  955, 620);
-        n("11", CONSUMER,  900, 470);
-        n("10", CONSUMER,  870, 510);
-        n("12", CONSUMER,  830, 490);
-        n("8",  CONSUMER,  680, 610);
-        n("29", CONSUMER,  575, 610);
-        n("26", CONSUMER,  480, 480);
-        n("23", CONSUMER,  500, 640);
-        n("22", CONSUMER,  460, 620);
-        n("21", CONSUMER,  415, 500);
-        n("28", CONSUMER,  400, 600);
-        n("3",  CONSUMER,  360, 480);
-        n("17", CONSUMER,  205, 505);
-        n("18", CONSUMER,  170, 540);
-        n("13", CONSUMER,  150, 600);
-        n("14", CONSUMER,  160, 670);
-        n("25", CONSUMER,  70, 570);
-        n("24", CONSUMER,  255, 655);
+        n("6",  CONSUMER, 1220, 630);
+        n("5",  CONSUMER, 1170, 590);
+        n("7",  CONSUMER, 1220, 730);
+        n("4",  CONSUMER, 1140, 680);
+        n("9",  CONSUMER,  1050, 500);
+        n("11", CONSUMER,  990, 670);
+        n("10", CONSUMER,  920, 640);
+        n("12", CONSUMER,  920, 500);
+        n("8",  CONSUMER,  690, 500);
+        n("29", CONSUMER,  610, 680);
+        n("26", CONSUMER,  400, 500);
+        n("23", CONSUMER,  450, 660);
+        n("22", CONSUMER,  330, 640);
+        n("21", CONSUMER,  340, 490);
+        n("28", CONSUMER,  270, 520);
+        n("3",  CONSUMER,  180, 530);
+        n("17", CONSUMER,  170, 590);
+        n("18", CONSUMER,  100, 610);
+        n("13", CONSUMER,  80, 670);
+        n("14", CONSUMER,  40, 750);
+        n("25", CONSUMER,   10, 660);
+        n("24", CONSUMER,  200, 750);
 
         // Узлы соединения (нижняя часть)
-        n("XVIII.", JUNCTION, 1040, 545);
-        n("XI.",    JUNCTION,  965, 545);
-        n("X.",     JUNCTION,  785, 545);
-        n("IX.",    JUNCTION,  690, 545);
-        n("XV.",    JUNCTION,  605, 545);
-        n("XIV.",   JUNCTION,  530, 545);
-        n("XII.",   JUNCTION,  345, 545);
-        n("XIII.",  JUNCTION,  245, 575);
+        n("XVIII.", JUNCTION, 1180, 510);
+        n("XI.",    JUNCTION,  1020, 570);
+        n("X.",     JUNCTION,  860, 570);
+        n("IX.",    JUNCTION,  770, 570);
+        n("XV.",    JUNCTION,  650, 570);
+        n("XIV.",   JUNCTION,  570, 570);
+        n("XII.",   JUNCTION,  250, 620);
+        n("XIII.",  JUNCTION,  160, 670);
 
         // Промежуточные узлы (нижняя часть)
-        n("XI_11",  INTERMEDIATE,  932, 507);
-        n("XI_10",  INTERMEDIATE,  917, 527);
-        n("IX_8",   INTERMEDIATE,  685, 577);
-        n("XIV_23", INTERMEDIATE,  515, 592);
-        n("XIV_26", INTERMEDIATE,  505, 512);
-        n("XIV_22", INTERMEDIATE,  495, 582);
-        n("XIV_21", INTERMEDIATE,  472, 522);
-        n("XIV_28", INTERMEDIATE,  465, 572);
-        n("XII_20", INTERMEDIATE,  270, 502);
-        n("XII_19", INTERMEDIATE,  270, 472);
-        n("XVIII_5",INTERMEDIATE, 1045, 582);
-        n("XVIII_4",INTERMEDIATE, 1020, 602);
-        n("XVIII_9",INTERMEDIATE,  997, 582);
+        n("XI_11",  INTERMEDIATE,  970, 580);
+        n("XI_10",  INTERMEDIATE,  930, 580);
+        n("IX_8",   INTERMEDIATE,  720, 580);
+        n("XIV_23", INTERMEDIATE,  520, 580);
+        n("XIV_26", INTERMEDIATE,  470, 580);
+        n("XIV_22", INTERMEDIATE,  420, 580);
+        n("XIV_21", INTERMEDIATE,  370, 580);
+        n("XIV_28", INTERMEDIATE,  320, 580);
+        n("XII_20", INTERMEDIATE,  240, 480);
+        n("XII_19", INTERMEDIATE,  220, 420);
+        n("XVIII_5",INTERMEDIATE, 1230, 560);
+        n("XVIII_4",INTERMEDIATE, 1130, 600);
+        n("XVIII_9",INTERMEDIATE, 1080, 590);
 
         // ── Рёбра ────────────────────────────────────────────────────────
 

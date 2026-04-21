@@ -1,7 +1,10 @@
 package ru.singularity.task1.ui.panel;
 
+import com.mxgraph.model.mxCell;
+import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxEvent;
 import com.mxgraph.view.mxGraph;
 import org.springframework.stereotype.Component;
 import ru.singularity.task1.model.NetworkEdge;
@@ -20,6 +23,7 @@ public class NetworkPanel extends JPanel {
 	private final mxGraph graph;
 	private final Object graphParent;
 	private final mxGraphComponent graphComponent;
+	private final Map<Object, String> cellToNodeId = new HashMap<>();
 
 	public NetworkPanel(NetworkService networkService) {
 		this.networkService = networkService;
@@ -42,6 +46,19 @@ public class NetworkPanel extends JPanel {
 		refresh();
 	}
 
+	public void printCoordinates() {
+		Object[] vertices = graph.getChildVertices(graphParent);
+		java.util.Arrays.stream(vertices)
+				.filter(cellToNodeId::containsKey)
+				.sorted(java.util.Comparator.comparing(v -> cellToNodeId.get(v)))
+				.forEach(v -> {
+					mxGeometry geo = graph.getCellGeometry(v);
+					if (geo != null) {
+						System.out.printf("%-12s (%.0f, %.0f)%n", cellToNodeId.get(v), geo.getX(), geo.getY());
+					}
+				});
+	}
+
 	public void refresh() {
 		SwingUtilities.invokeLater(() -> {
 			graph.getModel().beginUpdate();
@@ -49,6 +66,7 @@ public class NetworkPanel extends JPanel {
 				graph.removeCells(graph.getChildVertices(graphParent));
 				graph.removeCells(graph.getChildEdges(graphParent));
 
+				cellToNodeId.clear();
 				Map<String, Object> vertices = new HashMap<>();
 				for (NetworkNode node : networkService.getNodes().values()) {
 					String style = nodeStyle(node);
@@ -64,6 +82,7 @@ public class NetworkPanel extends JPanel {
 							style
 					);
 					vertices.put(node.getId(), v);
+					cellToNodeId.put(v, node.getId());
 				}
 
 				for (NetworkEdge edge : networkService.getEdges().values()) {
@@ -98,10 +117,15 @@ public class NetworkPanel extends JPanel {
 	}
 
 	private String edgeLabel(NetworkEdge edge) {
-		if (edge.getCapacity() != 99999999.0) {
-			return String.format("%.0f/%.0f", edge.getFlow(), edge.getCapacity());
-		}
-		return "";
+		if (edge.getCapacity() >= 99999999.0) return "";
+		double cap = edge.getCapacity();
+		double flow = edge.getFlow();
+		return compactNum(flow) + "/" + compactNum(cap);
+	}
+
+	private String compactNum(double v) {
+		if (v >= 1000) return String.format("%dk", Math.round(v / 1000.0));
+		return String.format("%.0f", v);
 	}
 
 
@@ -125,9 +149,9 @@ public class NetworkPanel extends JPanel {
 					mxConstants.STYLE_FONTCOLOR + "=#303030;";
 			case INTERMEDIATE ->
 					mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" +
-					mxConstants.STYLE_FILLCOLOR + "=#010957;" +
-					mxConstants.STYLE_STROKECOLOR + "=#010957;" +
-					mxConstants.STYLE_FONTCOLOR + "=#0349fc;";
+					mxConstants.STYLE_FILLCOLOR + "=#000000;" +
+					mxConstants.STYLE_STROKECOLOR + "=#000000;" +
+					mxConstants.STYLE_FONTCOLOR + "=#000000;";
 		};
 	}
 
@@ -153,27 +177,30 @@ public class NetworkPanel extends JPanel {
 		if (ratio < 0.7) {
 			return "#E68600";
 		}
-		if (ratio <= 1) {
+		if (ratio < 1) {
 			return "#FBC02D";
+		}
+		if (ratio == 1) {
+			return "#8a0707";
 		}
 		return "#D32F2F";
 	}
 
 	private int nodeWidth(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE -> 64;
-			case CONSUMER -> 50;
-			case JUNCTION -> 36;
-			case INTERMEDIATE -> 8;
+			case SOURCE -> 24;
+			case CONSUMER -> 28;
+			case JUNCTION -> 32;
+			case INTERMEDIATE -> 6;
 		};
 	}
 
 	private int nodeHeight(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE -> 34;
-			case CONSUMER -> 42;
-			case JUNCTION -> 36;
-			case INTERMEDIATE -> 8;
+			case SOURCE -> 24;
+			case CONSUMER -> 28;
+			case JUNCTION -> 32;
+			case INTERMEDIATE -> 6;
 		};
 	}
 }
