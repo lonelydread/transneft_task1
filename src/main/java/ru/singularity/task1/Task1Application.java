@@ -32,7 +32,7 @@ public class Task1Application {
 			ResultPanel resultPanel = ctx.getBean(ResultPanel.class);
 			MainFrame frame = new MainFrame(networkPanel, controlPanel, resultPanel);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(1400, 900);
+			frame.setSize(1920, 1080);
 			frame.setVisible(true);
 			networkPanel.refresh();
 		});
