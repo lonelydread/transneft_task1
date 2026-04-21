@@ -170,19 +170,15 @@ public class NetworkPanel extends JPanel {
 	}
 
 	private String colorForLoad(NetworkEdge edge) {
+		NetworkNode from = networkService.getNode(edge.getFromNodeId());
+		if (from != null && from.getType() == NetworkNode.NodeType.SOURCE) {
+			return "#185FA5";
+		}
 		double ratio = edge.getCapacity() > 0 ? edge.getFlow() / edge.getCapacity() : 0.0;
-		if (ratio < 0.5) {
-			return "#4CAF50";
-		}
-		if (ratio < 0.7) {
-			return "#E68600";
-		}
-		if (ratio < 1) {
-			return "#FBC02D";
-		}
-		if (ratio == 1) {
-			return "#8a0707";
-		}
+		if (ratio < 0.5) return "#4CAF50";
+		if (ratio < 0.7) return "#E68600";
+		if (ratio < 1)   return "#FBC02D";
+		if (ratio == 1)  return "#8a0707";
 		return "#D32F2F";
 	}
 

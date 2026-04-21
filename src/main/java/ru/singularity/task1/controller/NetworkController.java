@@ -34,12 +34,12 @@ public class NetworkController {
         ));
     }
 
-    @PostMapping("/demo")
-    public ResponseEntity<Map<String, Object>> createDemoNetwork() {
-        networkService.createDemoNetwork();
-        networkPanel.refresh();
-        return getNetwork();
-    }
+//    @PostMapping("/demo")
+//    public ResponseEntity<Map<String, Object>> createDemoNetwork() {
+//        networkService.createDemoNetwork();
+//        networkPanel.refresh();
+//        return getNetwork();
+//    }
 
     @PostMapping("/demo-request")
     public ResponseEntity<Map<String, Object>> createRandomDemoRequest() {
