@@ -90,15 +90,18 @@ public class NetworkPanel extends JPanel {
 
 	private String nodeLabel(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE -> node.getId() + "\n" + String.format("%.0f кВт", node.getCapacity());
-			case CONSUMER -> node.getId() + "\n" + String.format("%.0f кВт", node.getDemand());
+			case SOURCE -> node.getId();
+			case CONSUMER -> node.getId();
 			case JUNCTION -> node.getId();
 			case INTERMEDIATE -> "";
 		};
 	}
 
 	private String edgeLabel(NetworkEdge edge) {
-		return String.format("%.0f/%.0f", edge.getFlow(), edge.getCapacity());
+		if (edge.getCapacity() != 99999999.0) {
+			return String.format("%.0f/%.0f", edge.getFlow(), edge.getCapacity());
+		}
+		return "";
 	}
 
 
@@ -124,7 +127,7 @@ public class NetworkPanel extends JPanel {
 					mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" +
 					mxConstants.STYLE_FILLCOLOR + "=#010957;" +
 					mxConstants.STYLE_STROKECOLOR + "=#010957;" +
-					mxConstants.STYLE_FONTCOLOR + "=#010957;";
+					mxConstants.STYLE_FONTCOLOR + "=#0349fc;";
 		};
 	}
 

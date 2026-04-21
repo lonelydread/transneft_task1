@@ -186,105 +186,105 @@ public class NetworkService {
         List<String[]> links = new ArrayList<>();
 
         // ── Верхний кластер ──────────────────────────────────────────────
-        links.add(e("1",     "2"));
-        links.add(e("XVI_38",  "1"));
-        links.add(e("XVI_38",  "38"));
-        links.add(e("L",     "XVI_L"));
-        links.add(e("XVI_L", "XVI_38"));
-        links.add(e("XVI.", "XVI_L"));
-        links.add(e("K",     "XVI."));
-        links.add(e("IV.",   "XVI."));
-        links.add(e("H",  "III."));
-        links.add(e("III.",  "III_34"));
-        links.add(e("III_34","III_33"));
-        links.add(e("III_34","34"));
-        links.add(e("III_33",  "33"));
-        links.add(e("III_33",  "IV."));
-        links.add(e("I_30",  "III."));
-        links.add(e("I_30",  "30"));
-        links.add(e("I_31",  "I_30"));
-        links.add(e("I_31",  "31"));
-        links.add(e("I.",  "I_31"));
-        links.add(e("II.",  "I."));
-        links.add(e("F",  "II."));
-        links.add(e("G",  "II."));
-        links.add(e("XVII.", "IV."));
-        links.add(e("V_32", "XVII."));
-        links.add(e("V_32", "32"));
-        links.add(e("V.", "V_32"));
-        links.add(e("I", "V."));
-        links.add(e("V.", "VIII."));
-        links.add(e("J", "VIII."));
-        links.add(e("VIII.", "37"));
-        links.add(e("V.", "VI_36"));
-        links.add(e("VI_36", "36"));
-        links.add(e("VI_35", "VI_36"));
-        links.add(e("VI_35", "35"));
-        links.add(e("VI.", "VI_35"));
-        links.add(e("VI.", "15"));
-        links.add(e("15", "16"));
-        links.add(e("VII.", "VI."));
-        links.add(e("O", "VII."));
-        links.add(e("N", "VII."));
-        links.add(e("VI.", "27"));
-        links.add(e("XII_19", "VI."));
-        links.add(e("XII_19", "19"));
-        links.add(e("XII_20", "XII_19"));
-        links.add(e("XII_20", "20"));
-        links.add(e("XII.", "XII_20"));
-        links.add(e("XII.", "3"));
-        links.add(e("XII.", "XIII."));
-        links.add(e("XIII.", "17"));
-        links.add(e("XIII.", "18"));
-        links.add(e("XIII.", "13"));
-        links.add(e("XIII.", "24"));
-        links.add(e("13", "25"));
-        links.add(e("13", "14"));
-        links.add(e("XIV_28", "XII."));
-        links.add(e("XIV_28", "28"));
-        links.add(e("XIV_21", "XIV_28"));
-        links.add(e("XIV_21", "21"));
-        links.add(e("XIV_22", "XIV_21"));
-        links.add(e("XIV_22", "22"));
-        links.add(e("XIV_26", "XIV_22"));
-        links.add(e("XIV_26", "26"));
-        links.add(e("XIV_23", "XIV_26"));
-        links.add(e("XIV_23", "23"));
-        links.add(e("XIV.", "XIV_23"));
-        links.add(e("E", "XIV."));
-        links.add(e("XIV.", "29"));
-        links.add(e("XV.", "XIV."));
-        links.add(e("D", "XV."));
-        links.add(e("IX_8", "XV."));
-        links.add(e("IX_8", "8"));
-        links.add(e("IX.", "IX_8"));
-        links.add(e("IX.", "I."));
-        links.add(e("X.", "IX."));
-        links.add(e("M", "X."));
-        links.add(e("X.", "12"));
-        links.add(e("B", "X."));
-        links.add(e("C", "X."));
-        links.add(e("XI_10", "X."));
-        links.add(e("XI_10", "10"));
-        links.add(e("XI_11", "XI_10"));
-        links.add(e("XI_11", "11"));
-        links.add(e("XI.", "XI_11"));
-        links.add(e("P", "XI."));
-        links.add(e("XVIII_9", "XI."));
-        links.add(e("XVIII_9", "9"));
-        links.add(e("XVIII_4", "XVIII_9"));
-        links.add(e("XVIII_4", "4"));
-        links.add(e("XVIII.", "XVIII_4"));
-        links.add(e("A", "XVIII."));
-        links.add(e("XVIII.", "XVIII_5"));
-        links.add(e("XVIII_5", "5"));
-        links.add(e("XVIII_5", "6"));
-        links.add(e("6", "7"));
+        links.add(e("1",       "2",        27945.0));
+        links.add(e("XVI_38",  "1",        27945.0));
+        links.add(e("XVI_38",  "38",       27945.0));
+        links.add(e("L",       "XVI_L",    99999999.0));
+        links.add(e("XVI_L",   "XVI_38",   27945.0));
+        links.add(e("XVI.",    "XVI_L",    27945.0));
+        links.add(e("K",       "XVI.",     99999999.0));
+        links.add(e("IV.",     "XVI.",     12672.0));
+        links.add(e("H",       "III.",     99999999.0));
+        links.add(e("III.",    "III_34",   7057.0));
+        links.add(e("III_34",  "III_33",   7057.0));
+        links.add(e("III_34",  "34",       7057.0));
+        links.add(e("III_33",  "33",       7057.0));
+        links.add(e("III_33",  "IV.",      7057.0));
+        links.add(e("I_30",    "III.",     7057.0));
+        links.add(e("I_30",    "30",       11578.0));
+        links.add(e("I_31",    "I_30",     11578.0));
+        links.add(e("I_31",    "31",       11578.0));
+        links.add(e("I.",      "I_31",     11578.0));
+        links.add(e("II.",     "I.",       7057.0));
+        links.add(e("F",       "II.",      99999999.0));
+        links.add(e("G",       "II.",      99999999.0));
+        links.add(e("XVII.",   "IV.",      12672.0));
+        links.add(e("V_32",    "XVII.",    7322.0));
+        links.add(e("V_32",    "32",       7322.0));
+        links.add(e("V.",      "V_32",     7322.0));
+        links.add(e("I",       "V.",       99999999.0));
+        links.add(e("V.",      "VIII.",    1614.0));
+        links.add(e("J",       "VIII.",    3573.0));
+        links.add(e("VIII.",   "37",       1614.0));
+        links.add(e("V.",      "VI_36",    5034.0));
+        links.add(e("VI_36",   "36",       5034.0));
+        links.add(e("VI_35",   "VI_36",    5034.0));
+        links.add(e("VI_35",   "35",       5034.0));
+        links.add(e("VI.",     "VI_35",    5034.0));
+        links.add(e("VI.",     "15",       14017.0));
+        links.add(e("15",      "16",       14017.0));
+        links.add(e("VII.",    "VI.",      3501.0));
+        links.add(e("O",       "VII.",     1762.0));
+        links.add(e("N",       "VII.",     2529.0));
+        links.add(e("VI.",     "27",       14017.0));
+        links.add(e("XII_19",  "VI.",      10516.0));
+        links.add(e("XII_19",  "19",       10516.0));
+        links.add(e("XII_20",  "XII_19",   10516.0));
+        links.add(e("XII_20",  "20",       10516.0));
+        links.add(e("XII.",    "XII_20",   10516.0));
+        links.add(e("XII.",    "3",        14548.0));
+        links.add(e("XII.",    "XIII.",    5087.0));
+        links.add(e("XIII.",   "17",       1651.0));
+        links.add(e("XIII.",   "18",       1651.0));
+        links.add(e("XIII.",   "13",       1571.0));
+        links.add(e("XIII.",   "24",       1864.0));
+        links.add(e("13",      "25",       1381.0));
+        links.add(e("13",      "14",       1571.0));
+        links.add(e("XIV_28",  "XII.",     14548.0));
+        links.add(e("XIV_28",  "28",       14548.0));
+        links.add(e("XIV_21",  "XIV_28",   14548.0));
+        links.add(e("XIV_21",  "21",       14548.0));
+        links.add(e("XIV_22",  "XIV_21",   14548.0));
+        links.add(e("XIV_22",  "22",       14548.0));
+        links.add(e("XIV_26",  "XIV_22",   14548.0));
+        links.add(e("XIV_26",  "26",       14548.0));
+        links.add(e("XIV_23",  "XIV_26",   14548.0));
+        links.add(e("XIV_23",  "23",       14548.0));
+        links.add(e("XIV.",    "XIV_23",   14548.0));
+        links.add(e("E",       "XIV.",     99999999.0));
+        links.add(e("XIV.",    "29",       11089.0));
+        links.add(e("XV.",     "XIV.",     11089.0));
+        links.add(e("D",       "XV.",      99999999.0));
+        links.add(e("IX_8",    "XV.",      8991.0));
+        links.add(e("IX_8",    "8",        8991.0));
+        links.add(e("IX.",     "IX_8",     8991.0));
+        links.add(e("IX.",     "I.",       6269.0));
+        links.add(e("X.",      "IX.",      12900.0));
+        links.add(e("M",       "X.",       2612.0));
+        links.add(e("X.",      "12",       5901.0));
+        links.add(e("B",       "X.",       99999999.0));
+        links.add(e("C",       "X.",       4503.0));
+        links.add(e("XI_10",   "X.",       5901.0));
+        links.add(e("XI_10",   "10",       5901.0));
+        links.add(e("XI_11",   "XI_10",    5901.0));
+        links.add(e("XI_11",   "11",       5901.0));
+        links.add(e("XI.",     "XI_11",    5901.0));
+        links.add(e("P",       "XI.",      2670.0));
+        links.add(e("XVIII_9", "XI.",      3644.0));
+        links.add(e("XVIII_9", "9",        3644.0));
+        links.add(e("XVIII_4", "XVIII_9",  3644.0));
+        links.add(e("XVIII_4", "4",        3644.0));
+        links.add(e("XVIII.",  "XVIII_4",  3644.0));
+        links.add(e("A",       "XVIII.",   99999999.0));
+        links.add(e("XVIII.",  "XVIII_5",  4878.0));
+        links.add(e("XVIII_5", "5",        4878.0));
+        links.add(e("XVIII_5", "6",        4878.0));
+        links.add(e("6",       "7",        4878.0));
 
         // Добавляем все рёбра
         int idx = 1;
         for (String[] link : links) {
-            addEdge(createEdge("E-" + idx++, link[0], link[1], 100));
+            addEdge(createEdge("E-" + idx++, link[0], link[1], link[2]));
         }
     }
 
@@ -302,9 +302,9 @@ public class NetworkService {
         addNode(createNode(id, type, x, y));
     }
 
-    /** Сокращённое создание пары [from, to] */
-    private String[] e(String from, String to) {
-        return new String[]{from, to};
+
+    private String[] e(String from, String to, double capacity) {
+        return new String[]{from, to, String.valueOf(capacity)};
     }
 
     private NetworkNode createNode(String id, NetworkNode.NodeType type, double x, double y) {
@@ -313,21 +313,15 @@ public class NetworkService {
         node.setType(type);
         node.setX(x);
         node.setY(y);
-        if (type == SOURCE) {
-            node.setCapacity(120);
-        } else if (type == CONSUMER) {
-            node.setDemand(30);
-        }
         return node;
     }
 
-    private NetworkEdge createEdge(String id, String from, String to, double capacity) {
+    private NetworkEdge createEdge(String id, String from, String to, String capacity) {
         NetworkEdge edge = new NetworkEdge();
         edge.setId(id);
         edge.setFromNodeId(from);
         edge.setToNodeId(to);
-        edge.setCapacity(capacity);
-        edge.setType(NetworkEdge.EdgeType.FLOW_DIRECTION);
+        edge.setCapacity(Double.valueOf(capacity));
         return edge;
     }
 
@@ -342,38 +336,6 @@ public class NetworkService {
             createDemoNetwork();
         }
 
-        int selectedConsumers = 0;
-        double totalDemand = 0.0;
-
-        for (NetworkNode node : nodes.values()) {
-            node.setCurrentFlow(0.0);
-            if (node.getType() == CONSUMER) {
-                if (random.nextDouble() < 0.35) {
-                    double demand = 20_000 + random.nextInt(280_001);
-                    node.setDemand(demand);
-                    node.setCurrentFlow(demand);
-                    selectedConsumers++;
-                    totalDemand += demand;
-                } else {
-                    node.setDemand(0.0);
-                }
-            }
-        }
-
-        int sourceCount = 0;
-        for (NetworkNode node : nodes.values()) {
-            if (node.getType() == SOURCE) {
-                sourceCount++;
-            }
-        }
-        double avgPerSource = sourceCount > 0 ? totalDemand / sourceCount : 0.0;
-        for (NetworkNode node : nodes.values()) {
-            if (node.getType() == SOURCE) {
-                double jitter = avgPerSource * (0.75 + random.nextDouble() * 0.5);
-                node.setCapacity(Math.max(10_000, jitter));
-            }
-        }
-
         for (NetworkEdge edge : edges.values()) {
             double cap = Math.max(edge.getCapacity(), 1.0);
             double flow = cap * (0.2 + random.nextDouble() * 0.7);
@@ -381,8 +343,7 @@ public class NetworkService {
         }
 
         Map<String, Object> meta = new HashMap<>();
-        meta.put("selectedConsumers", selectedConsumers);
-        meta.put("totalDemand", totalDemand);
+
         meta.put("updatedEdges", edges.size());
         return meta;
     }

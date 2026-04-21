@@ -4,9 +4,6 @@ public class NetworkNode {
     private String id;           // "1", "A", "VII"
     private NodeType type;       // SOURCE, CONSUMER, JUNCTION, INTERMEDIATE
     private double x, y;         // координаты
-    private double capacity;     // МВт — для источников
-    private double demand;       // МВт — для потребителей
-    private double currentFlow;  // результат оптимизации
 
     public enum NodeType { SOURCE, CONSUMER, JUNCTION, INTERMEDIATE }
 
@@ -45,28 +42,5 @@ public class NetworkNode {
         this.y = y;
     }
 
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
-    public double getDemand() {
-        return demand;
-    }
-
-    public void setDemand(double demand) {
-        this.demand = demand;
-    }
-
-    public double getCurrentFlow() {
-        return currentFlow;
-    }
-
-    public void setCurrentFlow(double currentFlow) {
-        this.currentFlow = currentFlow;
-    }
 }
 

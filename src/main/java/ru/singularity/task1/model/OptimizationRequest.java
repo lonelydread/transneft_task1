@@ -13,8 +13,6 @@ import java.util.Map;
 public class OptimizationRequest {
     private List<NetworkNode> nodes;
     private List<NetworkEdge> edges;
-    private String algorithm;    // "max_flow" | "min_cost" | "ml_forecast"
-    private Map<String, Object> params;
 
     public List<NetworkNode> getNodes() {
         return nodes;
@@ -32,20 +30,5 @@ public class OptimizationRequest {
         this.edges = edges;
     }
 
-    public String getAlgorithm() {
-        return algorithm;
-    }
-
-    public void setAlgorithm(String algorithm) {
-        this.algorithm = algorithm;
-    }
-
-    public Map<String, Object> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, Object> params) {
-        this.params = params;
-    }
 }
 

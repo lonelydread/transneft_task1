@@ -27,7 +27,6 @@ public class OptimizationService {
         OptimizationRequest request = new OptimizationRequest();
         request.setNodes(new ArrayList<>(networkService.getNodes().values()));
         request.setEdges(new ArrayList<>(networkService.getEdges().values()));
-        request.setAlgorithm(algorithm);
 
         OptimizationResult result = restTemplate.postForObject(
                 pythonUrl + "/api/optimize",
