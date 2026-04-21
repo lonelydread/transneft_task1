@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
+
 @Service
 public class NetworkService {
 
@@ -108,15 +109,15 @@ public class NetworkService {
         n("VII.",  JUNCTION, 105, 300);
 
         // Промежуточные узлы (верхняя часть)
-        n("XVI_L",  JUNCTION, 582, 142);
-        n("XVI_38", JUNCTION, 545, 147);
-        n("V_32",   JUNCTION, 420, 250);
-        n("III_33", JUNCTION, 617, 282);
-        n("III_34", JUNCTION, 630, 312);
-        n("I_30",   JUNCTION, 755, 247);
-        n("I_31",   JUNCTION, 795, 227);
-        n("VI_35",  JUNCTION, 280, 320);
-        n("VI_36",  JUNCTION, 257, 287);
+        n("XVI_L",  INTERMEDIATE, 582, 142);
+        n("XVI_38", INTERMEDIATE, 545, 147);
+        n("V_32",   INTERMEDIATE, 420, 250);
+        n("III_33", INTERMEDIATE, 617, 282);
+        n("III_34", INTERMEDIATE, 630, 312);
+        n("I_30",   INTERMEDIATE, 755, 247);
+        n("I_31",   INTERMEDIATE, 795, 227);
+        n("VI_35",  INTERMEDIATE, 280, 320);
+        n("VI_36",  INTERMEDIATE, 257, 287);
 
         // ── Нижний кластер ───────────────────────────────────────────────
 
@@ -166,19 +167,19 @@ public class NetworkService {
         n("XIII.",  JUNCTION,  245, 575);
 
         // Промежуточные узлы (нижняя часть)
-        n("XI_11",  JUNCTION,  932, 507);
-        n("XI_10",  JUNCTION,  917, 527);
-        n("IX_8",   JUNCTION,  685, 577);
-        n("XIV_23", JUNCTION,  515, 592);
-        n("XIV_26", JUNCTION,  505, 512);
-        n("XIV_22", JUNCTION,  495, 582);
-        n("XIV_21", JUNCTION,  472, 522);
-        n("XIV_28", JUNCTION,  465, 572);
-        n("XII_20", JUNCTION,  270, 502);
-        n("XII_19", JUNCTION,  270, 472);
-        n("XVIII_5",JUNCTION, 1045, 582);
-        n("XVIII_4",JUNCTION, 1020, 602);
-        n("XVIII_9",JUNCTION,  997, 582);
+        n("XI_11",  INTERMEDIATE,  932, 507);
+        n("XI_10",  INTERMEDIATE,  917, 527);
+        n("IX_8",   INTERMEDIATE,  685, 577);
+        n("XIV_23", INTERMEDIATE,  515, 592);
+        n("XIV_26", INTERMEDIATE,  505, 512);
+        n("XIV_22", INTERMEDIATE,  495, 582);
+        n("XIV_21", INTERMEDIATE,  472, 522);
+        n("XIV_28", INTERMEDIATE,  465, 572);
+        n("XII_20", INTERMEDIATE,  270, 502);
+        n("XII_19", INTERMEDIATE,  270, 472);
+        n("XVIII_5",INTERMEDIATE, 1045, 582);
+        n("XVIII_4",INTERMEDIATE, 1020, 602);
+        n("XVIII_9",INTERMEDIATE,  997, 582);
 
         // ── Рёбра ────────────────────────────────────────────────────────
 
@@ -186,124 +187,99 @@ public class NetworkService {
 
         // ── Верхний кластер ──────────────────────────────────────────────
         links.add(e("1",     "2"));
-        // L → XVI через промежуточный XVI_L
+        links.add(e("XVI_38",  "1"));
+        links.add(e("XVI_38",  "38"));
         links.add(e("L",     "XVI_L"));
-        links.add(e("XVI_L", "XVI."));
+        links.add(e("XVI_L", "XVI_38"));
+        links.add(e("XVI.", "XVI_L"));
         links.add(e("K",     "XVI."));
-        links.add(e("XVI.",  "1"));
-        // XVI. → 38 через промежуточный XVI_38
-        links.add(e("XVI.",  "XVI_38"));
-        links.add(e("XVI_38","38"));
         links.add(e("IV.",   "XVI."));
-        links.add(e("XVII.", "IV."));
-        links.add(e("III.",  "IV."));
-        // III. → 33 через промежуточный III_33
-        links.add(e("III.",  "III_33"));
-        links.add(e("III_33","33"));
-        // III. → 34 через промежуточный III_34
+        links.add(e("H",  "III."));
         links.add(e("III.",  "III_34"));
+        links.add(e("III_34","III_33"));
         links.add(e("III_34","34"));
-        links.add(e("I.",    "III."));
-        links.add(e("VI.",   "V."));
-        // I. → 31 через промежуточный I_31
-        links.add(e("I.",    "I_31"));
-        links.add(e("I_31",  "31"));
-        // I. → 30 через промежуточный I_30
-        links.add(e("I.",    "I_30"));
+        links.add(e("III_33",  "33"));
+        links.add(e("III_33",  "IV."));
+        links.add(e("I_30",  "III."));
         links.add(e("I_30",  "30"));
-        links.add(e("II.",   "I."));
-        links.add(e("F",     "II."));
-        links.add(e("G",     "II."));
-        links.add(e("H",     "III."));
-        links.add(e("V.",    "XVII."));
-        // V. → 32 через промежуточный V_32
-        links.add(e("V.",    "V_32"));
-        links.add(e("V_32",  "32"));
-        links.add(e("V.",    "VIII."));
-        links.add(e("I",     "V."));
+        links.add(e("I_31",  "I_30"));
+        links.add(e("I_31",  "31"));
+        links.add(e("I.",  "I_31"));
+        links.add(e("II.",  "I."));
+        links.add(e("F",  "II."));
+        links.add(e("G",  "II."));
+        links.add(e("XVII.", "IV."));
+        links.add(e("V_32", "XVII."));
+        links.add(e("V_32", "32"));
+        links.add(e("V.", "V_32"));
+        links.add(e("I", "V."));
+        links.add(e("V.", "VIII."));
+        links.add(e("J", "VIII."));
         links.add(e("VIII.", "37"));
-        links.add(e("J",     "VIII."));
-        links.add(e("V.",    "36"));
-        // VI. → 36 через промежуточный VI_36
-        links.add(e("VI.",   "VI_36"));
+        links.add(e("V.", "VI_36"));
         links.add(e("VI_36", "36"));
-        // VI. → 35 через промежуточный VI_35
-        links.add(e("VI.",   "VI_35"));
+        links.add(e("VI_35", "VI_36"));
         links.add(e("VI_35", "35"));
-        links.add(e("VI.",   "15"));
-        links.add(e("15",    "16"));
-        links.add(e("VI.",   "27"));
-        links.add(e("VII.",  "VI."));
-        links.add(e("O",     "VII."));
-        links.add(e("N",     "VII."));
-
-        // ── Нижний кластер ───────────────────────────────────────────────
-        links.add(e("XII.",  "3"));
-        // XII. → 20 через промежуточный XII_20
-        links.add(e("XII.",  "XII_20"));
-        links.add(e("XII_20","20"));
-        // XII. → 19 через промежуточный XII_19
-        links.add(e("XII.",  "XII_19"));
-        links.add(e("XII_19","19"));
-        links.add(e("XII.",  "VI."));
-        links.add(e("XII.",  "XIII."));
+        links.add(e("VI.", "VI_35"));
+        links.add(e("VI.", "15"));
+        links.add(e("15", "16"));
+        links.add(e("VII.", "VI."));
+        links.add(e("O", "VII."));
+        links.add(e("N", "VII."));
+        links.add(e("VI.", "27"));
+        links.add(e("XII_19", "VI."));
+        links.add(e("XII_19", "19"));
+        links.add(e("XII_20", "XII_19"));
+        links.add(e("XII_20", "20"));
+        links.add(e("XII.", "XII_20"));
+        links.add(e("XII.", "3"));
+        links.add(e("XII.", "XIII."));
         links.add(e("XIII.", "17"));
         links.add(e("XIII.", "18"));
         links.add(e("XIII.", "13"));
         links.add(e("XIII.", "24"));
-        links.add(e("13",    "14"));
-        links.add(e("13",    "25"));
-        links.add(e("XIV.",  "XII."));
-        // XIV. → 21 через промежуточный XIV_21
-        links.add(e("XIV.",  "XIV_21"));
-        links.add(e("XIV_21","21"));
-        // XIV. → 26 через промежуточный XIV_26
-        links.add(e("XIV.",  "XIV_26"));
-        links.add(e("XIV_26","26"));
-        // XIV. → 28 через промежуточный XIV_28
-        links.add(e("XIV.",  "XIV_28"));
-        links.add(e("XIV_28","28"));
-        // XIV. → 22 через промежуточный XIV_22
-        links.add(e("XIV.",  "XIV_22"));
-        links.add(e("XIV_22","22"));
-        // XIV. → 23 через промежуточный XIV_23
-        links.add(e("XIV.",  "XIV_23"));
-        links.add(e("XIV_23","23"));
-        links.add(e("XIV.",  "29"));
-        links.add(e("E",     "XIV."));
-        links.add(e("XV.",   "XIV."));
-        links.add(e("D",     "XV."));
-        links.add(e("IX.",   "XV."));
-        // IX. → 8 через промежуточный IX_8
-        links.add(e("IX.",   "IX_8"));
-        links.add(e("IX_8",  "8"));
-        links.add(e("IX.",   "I."));
-        links.add(e("X.",    "IX."));
-        links.add(e("M",     "X."));
-        links.add(e("X.",    "12"));
-        links.add(e("B",     "X."));
-        links.add(e("C",     "X."));
-        // XI. → 11 через промежуточный XI_11
-        links.add(e("XI.",   "XI_11"));
-        links.add(e("XI_11", "11"));
-        // XI. → 10 через промежуточный XI_10
-        links.add(e("XI.",   "XI_10"));
+        links.add(e("13", "25"));
+        links.add(e("13", "14"));
+        links.add(e("XIV_28", "XII."));
+        links.add(e("XIV_28", "28"));
+        links.add(e("XIV_21", "XIV_28"));
+        links.add(e("XIV_21", "21"));
+        links.add(e("XIV_22", "XIV_21"));
+        links.add(e("XIV_22", "22"));
+        links.add(e("XIV_26", "XIV_22"));
+        links.add(e("XIV_26", "26"));
+        links.add(e("XIV_23", "XIV_26"));
+        links.add(e("XIV_23", "23"));
+        links.add(e("XIV.", "XIV_23"));
+        links.add(e("E", "XIV."));
+        links.add(e("XIV.", "29"));
+        links.add(e("XV.", "XIV."));
+        links.add(e("D", "XV."));
+        links.add(e("IX_8", "XV."));
+        links.add(e("IX_8", "8"));
+        links.add(e("IX.", "IX_8"));
+        links.add(e("IX.", "I."));
+        links.add(e("X.", "IX."));
+        links.add(e("M", "X."));
+        links.add(e("X.", "12"));
+        links.add(e("B", "X."));
+        links.add(e("C", "X."));
+        links.add(e("XI_10", "X."));
         links.add(e("XI_10", "10"));
-        links.add(e("XI.",   "X."));
-        links.add(e("P",     "XI."));
-        links.add(e("XVIII.","XI."));
-        // XVIII. → 4 через промежуточный XVIII_4
-        links.add(e("XVIII.","XVIII_4"));
-        links.add(e("XVIII_4","4"));
-        // XVIII. → 9 через промежуточный XVIII_9
-        links.add(e("XVIII.","XVIII_9"));
-        links.add(e("XVIII_9","9"));
-        links.add(e("A",     "XVIII."));
-        // XVIII. → 5/6 через промежуточный XVIII_5
-        links.add(e("XVIII.","XVIII_5"));
-        links.add(e("XVIII_5","5"));
-        links.add(e("XVIII_5","6"));
-        links.add(e("6",     "7"));
+        links.add(e("XI_11", "XI_10"));
+        links.add(e("XI_11", "11"));
+        links.add(e("XI.", "XI_11"));
+        links.add(e("P", "XI."));
+        links.add(e("XVIII_9", "XI."));
+        links.add(e("XVIII_9", "9"));
+        links.add(e("XVIII_4", "XVIII_9"));
+        links.add(e("XVIII_4", "4"));
+        links.add(e("XVIII.", "XVIII_4"));
+        links.add(e("A", "XVIII."));
+        links.add(e("XVIII.", "XVIII_5"));
+        links.add(e("XVIII_5", "5"));
+        links.add(e("XVIII_5", "6"));
+        links.add(e("6", "7"));
 
         // Добавляем все рёбра
         int idx = 1;
@@ -319,6 +295,7 @@ public class NetworkService {
     private static final NetworkNode.NodeType SOURCE   = NetworkNode.NodeType.SOURCE;
     private static final NetworkNode.NodeType CONSUMER = NetworkNode.NodeType.CONSUMER;
     private static final NetworkNode.NodeType JUNCTION = NetworkNode.NodeType.JUNCTION;
+    private static final NetworkNode.NodeType INTERMEDIATE = NetworkNode.NodeType.INTERMEDIATE;
 
     /** Сокращённый вызов addNode */
     private void n(String id, NetworkNode.NodeType type, double x, double y) {

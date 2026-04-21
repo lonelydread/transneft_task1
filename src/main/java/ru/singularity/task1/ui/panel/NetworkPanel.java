@@ -93,6 +93,7 @@ public class NetworkPanel extends JPanel {
 			case SOURCE -> node.getId() + "\n" + String.format("%.0f кВт", node.getCapacity());
 			case CONSUMER -> node.getId() + "\n" + String.format("%.0f кВт", node.getDemand());
 			case JUNCTION -> node.getId();
+			case INTERMEDIATE -> "";
 		};
 	}
 
@@ -119,6 +120,11 @@ public class NetworkPanel extends JPanel {
 					mxConstants.STYLE_FILLCOLOR + "=#FDEAEA;" +
 					mxConstants.STYLE_STROKECOLOR + "=#C81E1E;" +
 					mxConstants.STYLE_FONTCOLOR + "=#303030;";
+			case INTERMEDIATE ->
+					mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_ELLIPSE + ";" +
+					mxConstants.STYLE_FILLCOLOR + "=#010957;" +
+					mxConstants.STYLE_STROKECOLOR + "=#010957;" +
+					mxConstants.STYLE_FONTCOLOR + "=#010957;";
 		};
 	}
 
@@ -144,7 +150,7 @@ public class NetworkPanel extends JPanel {
 		if (ratio < 0.7) {
 			return "#E68600";
 		}
-		if (ratio == 1) {
+		if (ratio <= 1) {
 			return "#FBC02D";
 		}
 		return "#D32F2F";
@@ -155,6 +161,7 @@ public class NetworkPanel extends JPanel {
 			case SOURCE -> 64;
 			case CONSUMER -> 50;
 			case JUNCTION -> 36;
+			case INTERMEDIATE -> 8;
 		};
 	}
 
@@ -163,6 +170,7 @@ public class NetworkPanel extends JPanel {
 			case SOURCE -> 34;
 			case CONSUMER -> 42;
 			case JUNCTION -> 36;
+			case INTERMEDIATE -> 8;
 		};
 	}
 }

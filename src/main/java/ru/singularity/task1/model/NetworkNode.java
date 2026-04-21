@@ -2,13 +2,13 @@ package ru.singularity.task1.model;
 
 public class NetworkNode {
     private String id;           // "1", "A", "VII"
-    private NodeType type;       // SOURCE, CONSUMER, JUNCTION
+    private NodeType type;       // SOURCE, CONSUMER, JUNCTION, INTERMEDIATE
     private double x, y;         // координаты
     private double capacity;     // МВт — для источников
     private double demand;       // МВт — для потребителей
     private double currentFlow;  // результат оптимизации
 
-    public enum NodeType { SOURCE, CONSUMER, JUNCTION }
+    public enum NodeType { SOURCE, CONSUMER, JUNCTION, INTERMEDIATE }
 
     public NetworkNode() {
     }
