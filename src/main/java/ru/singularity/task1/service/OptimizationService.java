@@ -35,8 +35,6 @@ public class OptimizationService {
                 OptimizationResult.class
         );
 
-        // Применяем результат прямо в памяти
-//        networkService.applyResult(result);
         return result;
     }
 }

@@ -27,7 +27,7 @@ public class ControlPanel extends JPanel {
 
 	private void buildUI() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(220, 0));
+		setPreferredSize(new Dimension(100, 0));
 
 		JButton btnClear    = new JButton("Очистить сеть");
 
@@ -40,19 +40,19 @@ public class ControlPanel extends JPanel {
 		add(btnClear);
 	}
 
-	private void runOptimization(String algorithm) {
-		// SwingWorker — оптимизация в фоне, UI не замерзает
-		new SwingWorker<OptimizationResult, Void>() {
-			@Override
-			protected OptimizationResult doInBackground() {
-				// Прямой вызов сервиса (сервис сам вызывает Python)
-				return optimizationService.optimize(algorithm);
-			}
-			@Override
-			protected void done() {
-				networkPanel.refresh(); // обновляем визуализацию
-			}
-		}.execute();
-	}
+//	private void runOptimization(String algorithm) {
+//		// SwingWorker — оптимизация в фоне, UI не замерзает
+//		new SwingWorker<OptimizationResult, Void>() {
+//			@Override
+//			protected OptimizationResult doInBackground() {
+//				// Прямой вызов сервиса (сервис сам вызывает Python)
+//				return optimizationService.optimize(algorithm);
+//			}
+//			@Override
+//			protected void done() {
+//				networkPanel.refresh(); // обновляем визуализацию
+//			}
+//		}.execute();
+//	}
 }
 

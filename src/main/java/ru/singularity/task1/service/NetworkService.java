@@ -7,8 +7,10 @@ import ru.singularity.task1.model.NetworkEdge;
 import ru.singularity.task1.model.NetworkNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
@@ -16,6 +18,7 @@ public class NetworkService {
 
     private final Map<String, NetworkNode> nodes = new ConcurrentHashMap<>();
     private final Map<String, NetworkEdge> edges = new ConcurrentHashMap<>();
+    private final Random random = new Random();
 
     private DefaultDirectedWeightedGraph<String, DefaultWeightedEdge> graph =
             new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
@@ -72,7 +75,7 @@ public class NetworkService {
         n("K",  SOURCE, 620, 195);
         n("J",  SOURCE, 270, 190);
         n("F",  SOURCE, 940, 195);
-        n("G",  SOURCE, 1010, 195);
+        n("G",  SOURCE, 1050, 215);
 
         // Потребители верхней части
         n("1",  CONSUMER, 510,  25);
@@ -81,15 +84,15 @@ public class NetworkService {
         n("15", CONSUMER, 215, 230);
         n("16", CONSUMER, 215, 130);
         n("35", CONSUMER, 330, 330);
-        n("36", CONSUMER, 265, 255);
+        n("36", CONSUMER, 285, 265);
         n("27", CONSUMER, 150, 355);
         n("37", CONSUMER, 380, 120);
         n("32", CONSUMER, 460, 235);
         n("30", CONSUMER, 710, 230);
-        n("31", CONSUMER, 750, 210);
+        n("31", CONSUMER, 790, 190);
         n("33", CONSUMER, 565, 300);
-        n("34", CONSUMER, 615, 305);
-        n("19", CONSUMER, 175, 400);
+        n("34", CONSUMER, 590, 360);
+        n("19", CONSUMER, 195, 400);
         n("20", CONSUMER, 195, 460);
 
         // Узлы соединения (верхняя часть)
@@ -121,9 +124,9 @@ public class NetworkService {
         n("6",  CONSUMER, 1100, 545);
         n("5",  CONSUMER,  1050, 620);
         n("7",  CONSUMER, 1100, 630);
-        n("4",  CONSUMER,  1000, 630);
+        n("4",  CONSUMER,  1000, 660);
         n("9",  CONSUMER,  955, 620);
-        n("11", CONSUMER,  910, 495);
+        n("11", CONSUMER,  900, 470);
         n("10", CONSUMER,  870, 510);
         n("12", CONSUMER,  830, 490);
         n("8",  CONSUMER,  680, 610);
@@ -278,5 +281,61 @@ public class NetworkService {
         edge.setCapacity(capacity);
         edge.setType(NetworkEdge.EdgeType.FLOW_DIRECTION);
         return edge;
+    }
+
+    /**
+     * Генерирует демонстрационную "заявку" на текущей схеме:
+     * - выбирает часть потребителей и назначает им случайный demand;
+     * - заполняет flow у рёбер в рамках их capacity;
+     * - обновляет capacity источников исходя из общей потребности.
+     */
+    public Map<String, Object> applyRandomRequestDemo() {
+        if (nodes.isEmpty() || edges.isEmpty()) {
+            createDemoNetwork();
+        }
+
+        int selectedConsumers = 0;
+        double totalDemand = 0.0;
+
+        for (NetworkNode node : nodes.values()) {
+            node.setCurrentFlow(0.0);
+            if (node.getType() == CONSUMER) {
+                if (random.nextDouble() < 0.35) {
+                    double demand = 20_000 + random.nextInt(280_001);
+                    node.setDemand(demand);
+                    node.setCurrentFlow(demand);
+                    selectedConsumers++;
+                    totalDemand += demand;
+                } else {
+                    node.setDemand(0.0);
+                }
+            }
+        }
+
+        int sourceCount = 0;
+        for (NetworkNode node : nodes.values()) {
+            if (node.getType() == SOURCE) {
+                sourceCount++;
+            }
+        }
+        double avgPerSource = sourceCount > 0 ? totalDemand / sourceCount : 0.0;
+        for (NetworkNode node : nodes.values()) {
+            if (node.getType() == SOURCE) {
+                double jitter = avgPerSource * (0.75 + random.nextDouble() * 0.5);
+                node.setCapacity(Math.max(10_000, jitter));
+            }
+        }
+
+        for (NetworkEdge edge : edges.values()) {
+            double cap = Math.max(edge.getCapacity(), 1.0);
+            double flow = cap * (0.2 + random.nextDouble() * 0.7);
+            edge.setFlow(flow);
+        }
+
+        Map<String, Object> meta = new HashMap<>();
+        meta.put("selectedConsumers", selectedConsumers);
+        meta.put("totalDemand", totalDemand);
+        meta.put("updatedEdges", edges.size());
+        return meta;
     }
 }

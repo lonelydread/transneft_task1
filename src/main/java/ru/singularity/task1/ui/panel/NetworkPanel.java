@@ -90,8 +90,8 @@ public class NetworkPanel extends JPanel {
 
 	private String nodeLabel(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE -> node.getId() + "\n" + String.format("%.0f MW", node.getCapacity());
-			case CONSUMER -> node.getId() + "\n" + String.format("%.0f MW", node.getDemand());
+			case SOURCE -> node.getId() + "\n" + String.format("%.0f кВт", node.getCapacity());
+			case CONSUMER -> node.getId() + "\n" + String.format("%.0f кВт", node.getDemand());
 			case JUNCTION -> node.getId();
 		};
 	}
@@ -99,6 +99,7 @@ public class NetworkPanel extends JPanel {
 	private String edgeLabel(NetworkEdge edge) {
 		return String.format("%.0f/%.0f", edge.getFlow(), edge.getCapacity());
 	}
+
 
 	private String nodeStyle(NetworkNode node) {
 		return switch (node.getType()) {
@@ -125,7 +126,14 @@ public class NetworkPanel extends JPanel {
 		return mxConstants.STYLE_STROKECOLOR + "=" + colorForLoad(edge) + ";" +
 				mxConstants.STYLE_STROKEWIDTH + "=2;" +
 				mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_CLASSIC + ";" +
-				mxConstants.STYLE_FONTCOLOR + "=#222222;";
+				mxConstants.STYLE_FONTCOLOR + "=#222222;" +
+				mxConstants.STYLE_FONTSIZE + "=8;" +
+				mxConstants.STYLE_FONTSTYLE + "=" + mxConstants.FONT_BOLD + ";" +
+				mxConstants.STYLE_LABEL_BACKGROUNDCOLOR + "=#FFFFFF;" +
+				mxConstants.STYLE_LABEL_BORDERCOLOR + "=" + colorForLoad(edge) + ";" +
+				mxConstants.STYLE_ALIGN + "=" + mxConstants.ALIGN_CENTER + ";" +
+				mxConstants.STYLE_VERTICAL_ALIGN + "=" + mxConstants.ALIGN_MIDDLE + ";" +
+				mxConstants.STYLE_ROUNDED + "=1;";
 	}
 
 	private String colorForLoad(NetworkEdge edge) {
@@ -133,7 +141,10 @@ public class NetworkPanel extends JPanel {
 		if (ratio < 0.5) {
 			return "#4CAF50";
 		}
-		if (ratio < 0.8) {
+		if (ratio < 0.7) {
+			return "#E68600";
+		}
+		if (ratio == 1) {
 			return "#FBC02D";
 		}
 		return "#D32F2F";
@@ -142,7 +153,7 @@ public class NetworkPanel extends JPanel {
 	private int nodeWidth(NetworkNode node) {
 		return switch (node.getType()) {
 			case SOURCE -> 64;
-			case CONSUMER -> 42;
+			case CONSUMER -> 50;
 			case JUNCTION -> 36;
 		};
 	}

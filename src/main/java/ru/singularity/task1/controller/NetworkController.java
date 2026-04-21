@@ -41,6 +41,17 @@ public class NetworkController {
         return getNetwork();
     }
 
+    @PostMapping("/demo-request")
+    public ResponseEntity<Map<String, Object>> createRandomDemoRequest() {
+        Map<String, Object> requestMeta = networkService.applyRandomRequestDemo();
+        networkPanel.refresh();
+        return ResponseEntity.ok(Map.of(
+                "request", requestMeta,
+                "nodes", networkService.getNodes().values(),
+                "edges", networkService.getEdges().values()
+        ));
+    }
+
     @DeleteMapping
     public ResponseEntity<Void> clearNetwork() {
         networkService.clearNetwork();
