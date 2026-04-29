@@ -1,5 +1,12 @@
 package ru.singularity.task1.model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class NetworkEdge {
     private String id;
     private String fromNodeId;
@@ -7,48 +14,5 @@ public class NetworkEdge {
     private double capacity; // пропускная способность
     private double flow;
 
-
-    public NetworkEdge() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getFromNodeId() {
-        return fromNodeId;
-    }
-
-    public void setFromNodeId(String fromNodeId) {
-        this.fromNodeId = fromNodeId;
-    }
-
-    public String getToNodeId() {
-        return toNodeId;
-    }
-
-    public void setToNodeId(String toNodeId) {
-        this.toNodeId = toNodeId;
-    }
-
-    public double getCapacity() {
-        return capacity;
-    }
-
-    public void setCapacity(double capacity) {
-        this.capacity = capacity;
-    }
-
-    public double getFlow() {
-        return flow;
-    }
-
-    public void setFlow(double flow) {
-        this.flow = flow;
-    }
 }
 
