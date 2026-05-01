@@ -11,7 +11,7 @@ public class NetworkEdge {
     private String id;
     private String fromNodeId;
     private String toNodeId;
-    private double capacity; // пропускная способность
+    private double capacity;
     private double flow;
 
 }

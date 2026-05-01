@@ -17,10 +17,11 @@ import java.awt.GraphicsEnvironment;
 public class Task1Application {
 
 	public static void main(String[] args) {
+		System.setProperty("java.awt.headless", "false");
 		ConfigurableApplicationContext ctx = SpringApplication.run(Task1Application.class, args);
 
 		NetworkService networkService = ctx.getBean(NetworkService.class);
-		networkService.createDemoNetwork();
+		networkService.createNetwork();
 
 		if (GraphicsEnvironment.isHeadless()) {
 			return;

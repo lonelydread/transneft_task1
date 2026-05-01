@@ -47,6 +47,22 @@ public class NetworkService {
     public Map<String, NetworkNode> getNodes()         { return nodes; }
     public Map<String, NetworkEdge> getEdges()         { return edges; }
 
+    public void applyFlows(Map<String, Double> flows) {
+        for (NetworkEdge edge : edges.values()) {
+            String key = norm(edge.getFromNodeId()) + "->" + norm(edge.getToNodeId());
+            Double flow = flows.get(key);
+            if (flow == null) {
+                // fallback: старый формат мог хранить ключи в нижнем регистре
+                flow = flows.get(key.toLowerCase());
+            }
+            edge.setFlow(flow != null ? flow : 0.0);
+        }
+    }
+
+    private static String norm(String id) {
+        return id.endsWith(".") ? id.substring(0, id.length() - 1) : id;
+    }
+
     public void clearNetwork() {
         nodes.clear();
         edges.clear();
@@ -64,7 +80,7 @@ public class NetworkService {
     //   CONSUMER — потребитель      (⊗●)
     //   JUNCTION — узел соединения  (I. … XVIII.)
     // -----------------------------------------------------------------------
-    public void createDemoNetwork() {
+    public void createNetwork() {
         clearNetwork();
 
         // ── Верхний кластер ──────────────────────────────────────────────
@@ -101,7 +117,7 @@ public class NetworkService {
         n("IV.",   JUNCTION, 650, 240);
         n("XVII.", JUNCTION, 550, 360);
         n("III.",  JUNCTION, 740, 350);
-        n("I.",    JUNCTION, 920, 350);
+        n("I.1",   JUNCTION, 920, 350);
         n("II.",   JUNCTION, 1080, 350);
         n("VIII.", JUNCTION, 410, 270);
         n("V.",    JUNCTION, 410, 360);
@@ -204,8 +220,8 @@ public class NetworkService {
         links.add(e("I_30",    "30",       11578.0));
         links.add(e("I_31",    "I_30",     11578.0));
         links.add(e("I_31",    "31",       11578.0));
-        links.add(e("I.",      "I_31",     11578.0));
-        links.add(e("II.",     "I.",       7057.0));
+        links.add(e("I.1",     "I_31",     11578.0));
+        links.add(e("II.",     "I.1",     7057.0));
         links.add(e("F",       "II.",      99999999.0));
         links.add(e("G",       "II.",      99999999.0));
         links.add(e("XVII.",   "IV.",      12672.0));
@@ -258,7 +274,7 @@ public class NetworkService {
         links.add(e("IX_8",    "XV.",      8991.0));
         links.add(e("IX_8",    "8",        8991.0));
         links.add(e("IX.",     "IX_8",     8991.0));
-        links.add(e("IX.",     "I.",       6269.0));
+        links.add(e("IX.",     "I.1",     6269.0));
         links.add(e("X.",      "IX.",      12900.0));
         links.add(e("M",       "X.",       2612.0));
         links.add(e("X.",      "12",       5901.0));
@@ -325,26 +341,4 @@ public class NetworkService {
         return edge;
     }
 
-    /**
-     * Генерирует демонстрационную "заявку" на текущей схеме:
-     * - выбирает часть потребителей и назначает им случайный demand;
-     * - заполняет flow у рёбер в рамках их capacity;
-     * - обновляет capacity источников исходя из общей потребности.
-     */
-    public Map<String, Object> applyRandomRequestDemo() {
-        if (nodes.isEmpty() || edges.isEmpty()) {
-            createDemoNetwork();
-        }
-
-        for (NetworkEdge edge : edges.values()) {
-            double cap = Math.max(edge.getCapacity(), 1.0);
-            double flow = cap * (0.2 + random.nextDouble() * 0.7);
-            edge.setFlow(flow);
-        }
-
-        Map<String, Object> meta = new HashMap<>();
-
-        meta.put("updatedEdges", edges.size());
-        return meta;
-    }
 }

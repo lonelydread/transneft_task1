@@ -6,6 +6,7 @@ import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.view.mxGraph;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 import ru.singularity.task1.model.NetworkEdge;
 import ru.singularity.task1.model.NetworkNode;
@@ -17,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
+@ConditionalOnExpression("!T(java.awt.GraphicsEnvironment).isHeadless()")
 public class NetworkPanel extends JPanel {
 
 	private final NetworkService networkService;
@@ -44,19 +46,6 @@ public class NetworkPanel extends JPanel {
 		setLayout(new BorderLayout());
 		add(graphComponent, BorderLayout.CENTER);
 		refresh();
-	}
-
-	public void printCoordinates() {
-		Object[] vertices = graph.getChildVertices(graphParent);
-		java.util.Arrays.stream(vertices)
-				.filter(cellToNodeId::containsKey)
-				.sorted(java.util.Comparator.comparing(v -> cellToNodeId.get(v)))
-				.forEach(v -> {
-					mxGeometry geo = graph.getCellGeometry(v);
-					if (geo != null) {
-						System.out.printf("%-12s (%.0f, %.0f)%n", cellToNodeId.get(v), geo.getX(), geo.getY());
-					}
-				});
 	}
 
 	public void refresh() {
@@ -157,10 +146,10 @@ public class NetworkPanel extends JPanel {
 
 	private String edgeStyle(NetworkEdge edge) {
 		return mxConstants.STYLE_STROKECOLOR + "=" + colorForLoad(edge) + ";" +
-				mxConstants.STYLE_STROKEWIDTH + "=2;" +
+				mxConstants.STYLE_STROKEWIDTH + "=3;" +
 				mxConstants.STYLE_ENDARROW + "=" + mxConstants.ARROW_CLASSIC + ";" +
 				mxConstants.STYLE_FONTCOLOR + "=#222222;" +
-				mxConstants.STYLE_FONTSIZE + "=8;" +
+				mxConstants.STYLE_FONTSIZE + "=10;" +
 				mxConstants.STYLE_FONTSTYLE + "=" + mxConstants.FONT_BOLD + ";" +
 				mxConstants.STYLE_LABEL_BACKGROUNDCOLOR + "=#FFFFFF;" +
 				mxConstants.STYLE_LABEL_BORDERCOLOR + "=" + colorForLoad(edge) + ";" +
@@ -177,8 +166,8 @@ public class NetworkPanel extends JPanel {
 		double ratio = edge.getCapacity() > 0 ? edge.getFlow() / edge.getCapacity() : 0.0;
 		if (ratio < 0.5) return "#4CAF50";
 		if (ratio < 0.7) return "#E68600";
-		if (ratio < 1)   return "#FBC02D";
-		if (ratio == 1)  return "#8a0707";
+		if (ratio < 0.9)   return "#FBC02D";
+		if (ratio < 1)  return "#8a0707";
 		return "#D32F2F";
 	}
 

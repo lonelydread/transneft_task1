@@ -15,7 +15,6 @@ public class MainFrame extends JFrame {
 	private final ControlPanel controlPanel;
 	private final ResultPanel  resultPanel;
 
-	// Spring сам инжектирует все панели через конструктор
 	public MainFrame(NetworkPanel networkPanel,
 					 ControlPanel controlPanel,
 					 ResultPanel resultPanel) {

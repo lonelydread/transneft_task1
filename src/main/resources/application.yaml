@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8084
 
 python:
   service:
@@ -8,5 +8,4 @@ python:
 # отключаем открытие браузера
 spring:
   main:
-    headless: false
     web-application-type: servlet
