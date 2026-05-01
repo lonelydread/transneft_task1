@@ -1,10 +1,8 @@
 package ru.singularity.task1.ui.panel;
 
-import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
 import com.mxgraph.view.mxGraph;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
@@ -13,13 +11,18 @@ import ru.singularity.task1.model.NetworkNode;
 import ru.singularity.task1.service.NetworkService;
 
 import javax.swing.*;
+import javax.swing.Timer;
 import java.awt.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 @Component
 @ConditionalOnExpression("!T(java.awt.GraphicsEnvironment).isHeadless()")
 public class NetworkPanel extends JPanel {
+
+	private static final int   DOT_COUNT        = 3;
+	private static final int   DOT_SIZE         = 8;
+	private static final int   TIMER_INTERVAL   = 40; // ms → ~25 fps
 
 	private final NetworkService networkService;
 	private final mxGraph graph;
@@ -27,13 +30,17 @@ public class NetworkPanel extends JPanel {
 	private final mxGraphComponent graphComponent;
 	private final Map<Object, String> cellToNodeId = new HashMap<>();
 
+	// animation state
+	private final Set<Object>     markerCells  = new HashSet<>();
+	private final List<FlowMarker> flowMarkers = new ArrayList<>();
+	private Timer animationTimer;
+
 	public NetworkPanel(NetworkService networkService) {
 		this.networkService = networkService;
 		this.graph = new mxGraph() {
-			@Override
-			public boolean isCellEditable(Object cell) {
-				return false;
-			}
+			@Override public boolean isCellEditable(Object cell)   { return false; }
+			@Override public boolean isCellSelectable(Object cell) { return !markerCells.contains(cell); }
+			@Override public boolean isCellMovable(Object cell)    { return !markerCells.contains(cell); }
 		};
 		this.graph.setAllowDanglingEdges(false);
 		this.graph.setCellsResizable(false);
@@ -50,6 +57,8 @@ public class NetworkPanel extends JPanel {
 
 	public void refresh() {
 		SwingUtilities.invokeLater(() -> {
+			stopAnimation();
+
 			graph.getModel().beginUpdate();
 			try {
 				graph.removeCells(graph.getChildVertices(graphParent));
@@ -58,65 +67,148 @@ public class NetworkPanel extends JPanel {
 				cellToNodeId.clear();
 				Map<String, Object> vertices = new HashMap<>();
 				for (NetworkNode node : networkService.getNodes().values()) {
-					String style = nodeStyle(node);
-					String label = nodeLabel(node);
 					Object v = graph.insertVertex(
-							graphParent,
-							node.getId(),
-							label,
-							node.getX(),
-							node.getY(),
-							nodeWidth(node),
-							nodeHeight(node),
-							style
-					);
+							graphParent, node.getId(), nodeLabel(node),
+							node.getX(), node.getY(),
+							nodeWidth(node), nodeHeight(node),
+							nodeStyle(node));
 					vertices.put(node.getId(), v);
 					cellToNodeId.put(v, node.getId());
 				}
 
 				for (NetworkEdge edge : networkService.getEdges().values()) {
 					Object from = vertices.get(edge.getFromNodeId());
-					Object to = vertices.get(edge.getToNodeId());
-					if (from == null || to == null) {
-						continue;
-					}
-					graph.insertEdge(
-							graphParent,
-							edge.getId(),
-							edgeLabel(edge),
-							from,
-							to,
-							edgeStyle(edge)
-					);
+					Object to   = vertices.get(edge.getToNodeId());
+					if (from == null || to == null) continue;
+					graph.insertEdge(graphParent, edge.getId(), edgeLabel(edge),
+							from, to, edgeStyle(edge));
 				}
 			} finally {
 				graph.getModel().endUpdate();
 			}
+
+			startAnimation();
 			graphComponent.refresh();
 		});
 	}
 
+	// ── Animation ─────────────────────────────────────────────────────────────
+
+	private void stopAnimation() {
+		if (animationTimer != null) {
+			animationTimer.stop();
+			animationTimer = null;
+		}
+		// marker cells are vertices of graphParent → removed by refresh()'s removeCells above
+		markerCells.clear();
+		flowMarkers.clear();
+	}
+
+	private void startAnimation() {
+		graph.getModel().beginUpdate();
+		try {
+			for (NetworkEdge edge : networkService.getEdges().values()) {
+				if (edge.getFlow() <= 0) continue;
+
+				NetworkNode fn = networkService.getNode(edge.getFromNodeId());
+				NetworkNode tn = networkService.getNode(edge.getToNodeId());
+				if (fn == null || tn == null) continue;
+
+				double fx = fn.getX() + nodeWidth(fn)  / 2.0;
+				double fy = fn.getY() + nodeHeight(fn) / 2.0;
+				double tx = tn.getX() + nodeWidth(tn)  / 2.0;
+				double ty = tn.getY() + nodeHeight(tn) / 2.0;
+
+				double ratio = edge.getCapacity() > 0 ? edge.getFlow() / edge.getCapacity() : 0.5;
+				// speed: full pass in ~2 s at ratio=1; clamp to [0.4 .. 2.0]× base
+				double speed = 0.016 * Math.max(0.4, Math.min(2.0, ratio + 0.4));
+				String style = dotStyle(colorForLoad(edge));
+
+				for (int i = 0; i < DOT_COUNT; i++) {
+					double p  = (double) i / DOT_COUNT;
+					double mx = fx + (tx - fx) * p - DOT_SIZE / 2.0;
+					double my = fy + (ty - fy) * p - DOT_SIZE / 2.0;
+					Object cell = graph.insertVertex(graphParent, null, "",
+							mx, my, DOT_SIZE, DOT_SIZE, style);
+					markerCells.add(cell);
+					flowMarkers.add(new FlowMarker(cell, fx, fy, tx, ty, p, speed));
+				}
+			}
+		} finally {
+			graph.getModel().endUpdate();
+		}
+
+		if (!markerCells.isEmpty()) {
+			graph.orderCells(true, markerCells.toArray());
+		}
+
+		animationTimer = new Timer(TIMER_INTERVAL, e -> tickAnimation());
+		animationTimer.start();
+	}
+
+	private void tickAnimation() {
+		graph.getModel().beginUpdate();
+		try {
+			for (FlowMarker m : flowMarkers) {
+				m.progress += m.speed;
+				if (m.progress >= 1.0) m.progress -= 1.0;
+
+				double nx = m.fromX + (m.toX - m.fromX) * m.progress - DOT_SIZE / 2.0;
+				double ny = m.fromY + (m.toY - m.fromY) * m.progress - DOT_SIZE / 2.0;
+				mxGeometry geo = (mxGeometry) graph.getModel().getGeometry(m.cell).clone();
+				geo.setX(nx);
+				geo.setY(ny);
+				graph.getModel().setGeometry(m.cell, geo);
+			}
+		} finally {
+			graph.getModel().endUpdate();
+		}
+	}
+
+	private String dotStyle(String color) {
+		return mxConstants.STYLE_SHAPE      + "=" + mxConstants.SHAPE_ELLIPSE + ";" +
+			   mxConstants.STYLE_FILLCOLOR  + "=" + color + ";" +
+			   mxConstants.STYLE_STROKECOLOR + "=none;" +
+			   mxConstants.STYLE_NOLABEL    + "=1;" +
+			   "opacity=75;";
+	}
+
+	private static class FlowMarker {
+		final Object cell;
+		final double fromX, fromY, toX, toY;
+		double progress;
+		final double speed;
+
+		FlowMarker(Object cell,
+				   double fromX, double fromY,
+				   double toX,   double toY,
+				   double progress, double speed) {
+			this.cell = cell;
+			this.fromX = fromX; this.fromY = fromY;
+			this.toX   = toX;   this.toY   = toY;
+			this.progress = progress;
+			this.speed    = speed;
+		}
+	}
+
+	// ── Labels & styles ───────────────────────────────────────────────────────
+
 	private String nodeLabel(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE -> node.getId();
-			case CONSUMER -> node.getId();
-			case JUNCTION -> node.getId();
+			case SOURCE, CONSUMER, JUNCTION -> node.getId();
 			case INTERMEDIATE -> "";
 		};
 	}
 
 	private String edgeLabel(NetworkEdge edge) {
 		if (edge.getCapacity() >= 99999999.0) return "";
-		double cap = edge.getCapacity();
-		double flow = edge.getFlow();
-		return compactNum(flow) + "/" + compactNum(cap);
+		return compactNum(edge.getFlow()) + "/" + compactNum(edge.getCapacity());
 	}
 
 	private String compactNum(double v) {
 		if (v >= 1000) return String.format("%dk", Math.round(v / 1000.0));
 		return String.format("%.0f", v);
 	}
-
 
 	private String nodeStyle(NetworkNode node) {
 		return switch (node.getType()) {
@@ -160,15 +252,13 @@ public class NetworkPanel extends JPanel {
 
 	private String colorForLoad(NetworkEdge edge) {
 		NetworkNode from = networkService.getNode(edge.getFromNodeId());
-		if (from != null && from.getType() == NetworkNode.NodeType.SOURCE) {
-			return "#185FA5";
-		}
+		if (from != null && from.getType() == NetworkNode.NodeType.SOURCE) return "#185FA5";
 		double ratio = edge.getCapacity() > 0 ? edge.getFlow() / edge.getCapacity() : 0.0;
-		if (ratio < 0.5) return "#4CAF50";
-		if (ratio < 0.7) return "#E68600";
-		if (ratio < 0.9)   return "#FBC02D";
-		if (ratio < 1)  return "#8a0707";
-		return "#D32F2F";
+		if (ratio < 0.3) return "#43A047";
+		if (ratio < 0.5) return "#FDD835";
+		if (ratio < 0.7) return "#FB8C00";
+		if (ratio < 0.9) return "#E53935";
+		return "#B71C1C";
 	}
 
 	private int nodeWidth(NetworkNode node) {
@@ -189,4 +279,3 @@ public class NetworkPanel extends JPanel {
 		};
 	}
 }
-

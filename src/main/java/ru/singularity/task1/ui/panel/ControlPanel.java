@@ -33,7 +33,7 @@ public class ControlPanel extends JPanel {
 
 	private void buildUI() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(160, 0));
+		setPreferredSize(new Dimension(145, 0));
 
 		JButton btnOptimize   = new JButton("Отобразить заявки");
 
