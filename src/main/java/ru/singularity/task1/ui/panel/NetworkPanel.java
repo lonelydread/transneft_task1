@@ -3,6 +3,7 @@ package ru.singularity.task1.ui.panel;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
+import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.mxGraph;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import ru.singularity.task1.service.NetworkService;
 import javax.swing.*;
 import javax.swing.Timer;
 import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.*;
 import java.util.List;
 
@@ -52,6 +55,12 @@ public class NetworkPanel extends JPanel {
 
 		setLayout(new BorderLayout());
 		add(graphComponent, BorderLayout.CENTER);
+		graphComponent.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				fitGraph();
+			}
+		});
 		refresh();
 	}
 
@@ -89,7 +98,37 @@ public class NetworkPanel extends JPanel {
 
 			startAnimation();
 			graphComponent.refresh();
+			SwingUtilities.invokeLater(this::fitGraph);
 		});
+	}
+
+	private void fitGraph() {
+		mxRectangle raw = graph.getGraphBounds();
+		if (raw == null || raw.getWidth() == 0 || raw.getHeight() == 0) return;
+		int cw = graphComponent.getWidth();
+		int ch = graphComponent.getHeight();
+		if (cw <= 0 || ch <= 0) return;
+
+		double s0  = graph.getView().getScale();
+		double tx0 = graph.getView().getTranslate().getX();
+		double ty0 = graph.getView().getTranslate().getY();
+
+		double minModelX = raw.getX()      / s0 - tx0;
+		double minModelY = raw.getY()      / s0 - ty0;
+		double modelW    = raw.getWidth()  / s0;
+		double modelH    = raw.getHeight() / s0;
+
+		int pad = 20;
+		double newScale = Math.min(
+			(cw - 2.0 * pad) / modelW,
+			(ch - 2.0 * pad) / modelH
+		);
+
+		graph.getView().scaleAndTranslate(
+			newScale,
+			pad / newScale - minModelX,
+			pad / newScale - minModelY
+		);
 	}
 
 	// ── Animation ─────────────────────────────────────────────────────────────
