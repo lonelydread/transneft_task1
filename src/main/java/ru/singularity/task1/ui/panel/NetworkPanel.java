@@ -25,7 +25,7 @@ public class NetworkPanel extends JPanel {
 
 	private static final int   DOT_COUNT        = 3;
 	private static final int   DOT_SIZE         = 8;
-	private static final int   TIMER_INTERVAL   = 40; // ms → ~25 fps
+	private static final int   TIMER_INTERVAL   = 40;
 
 	private final NetworkService networkService;
 	private final mxGraph graph;
@@ -131,14 +131,13 @@ public class NetworkPanel extends JPanel {
 		);
 	}
 
-	// ── Animation ─────────────────────────────────────────────────────────────
+	// Анимация
 
 	private void stopAnimation() {
 		if (animationTimer != null) {
 			animationTimer.stop();
 			animationTimer = null;
 		}
-		// marker cells are vertices of graphParent → removed by refresh()'s removeCells above
 		markerCells.clear();
 		flowMarkers.clear();
 	}
@@ -159,7 +158,6 @@ public class NetworkPanel extends JPanel {
 				double ty = tn.getY() + nodeHeight(tn) / 2.0;
 
 				double ratio = edge.getCapacity() > 0 ? edge.getFlow() / edge.getCapacity() : 0.5;
-				// speed: full pass in ~2 s at ratio=1; clamp to [0.4 .. 2.0]× base
 				double speed = 0.016 * Math.max(0.4, Math.min(2.0, ratio + 0.4));
 				String style = dotStyle(colorForLoad(edge));
 
@@ -230,7 +228,7 @@ public class NetworkPanel extends JPanel {
 		}
 	}
 
-	// ── Labels & styles ───────────────────────────────────────────────────────
+	// Стили
 
 	private String nodeLabel(NetworkNode node) {
 		return switch (node.getType()) {

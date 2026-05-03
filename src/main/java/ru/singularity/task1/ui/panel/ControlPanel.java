@@ -10,7 +10,7 @@ import ru.singularity.task1.service.OptimizationService;
 import javax.swing.*;
 import java.awt.*;
 
-// ui/panel/ControlPanel.java
+
 @Component
 @ConditionalOnExpression("!T(java.awt.GraphicsEnvironment).isHeadless()")
 public class ControlPanel extends JPanel {
@@ -64,20 +64,5 @@ public class ControlPanel extends JPanel {
 
 		add(btnOptimize);
 	}
-
-//	private void runOptimization(String algorithm) {
-//		// SwingWorker — оптимизация в фоне, UI не замерзает
-//		new SwingWorker<OptimizationResult, Void>() {
-//			@Override
-//			protected OptimizationResult doInBackground() {
-//				// Прямой вызов сервиса (сервис сам вызывает Python)
-//				return optimizationService.optimize(algorithm);
-//			}
-//			@Override
-//			protected void done() {
-//				networkPanel.refresh(); // обновляем визуализацию
-//			}
-//		}.execute();
-//	}
 }
 

@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NetworkNode {
-    private String id;           // "1", "A", "VII"
-    private NodeType type;       // SOURCE, CONSUMER, JUNCTION, INTERMEDIATE
-    private double x, y;         // координаты
+    private String id;           
+    private NodeType type;       
+    private double x, y;        
 
     public enum NodeType { SOURCE, CONSUMER, JUNCTION, INTERMEDIATE }
 

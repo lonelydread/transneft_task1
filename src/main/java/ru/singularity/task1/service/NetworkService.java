@@ -24,9 +24,6 @@ public class NetworkService {
     private DefaultDirectedWeightedGraph<String, DefaultWeightedEdge> graph =
             new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
-    // -----------------------------------------------------------------------
-    // CRUD
-    // -----------------------------------------------------------------------
 
     public NetworkNode addNode(NetworkNode node) {
         nodes.put(node.getId(), node);
@@ -52,7 +49,6 @@ public class NetworkService {
             String key = norm(edge.getFromNodeId()) + "->" + norm(edge.getToNodeId());
             Double flow = flows.get(key);
             if (flow == null) {
-                // fallback: старый формат мог хранить ключи в нижнем регистре
                 flow = flows.get(key.toLowerCase());
             }
             edge.setFlow(flow != null ? flow : 0.0);
@@ -69,16 +65,10 @@ public class NetworkService {
         graph = new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
     }
 
-    // -----------------------------------------------------------------------
-    // Demo network — точное воспроизведение «Схемы потоков» (Схема 1)
-    //
-    // Система координат: начало — левый верхний угол схемы.
-    // Единица — условный пиксель, пропорции сохранены относительно PDF.
-    //
     // Типы узлов:
-    //   SOURCE   — источник потока  (▐▌)
-    //   CONSUMER — потребитель      (⊗●)
-    //   JUNCTION — узел соединения  (I. … XVIII.)
+    //   SOURCE   — источник потока  
+    //   CONSUMER — потребитель      
+    //   JUNCTION — узел соединения  
     // -----------------------------------------------------------------------
     public void createNetwork() {
         clearNetwork();
@@ -145,8 +135,8 @@ public class NetworkService {
         n("C",  SOURCE,  800, 660);
         n("D",  SOURCE,  620, 500);
         n("E",  SOURCE,  550, 490);
-        n("H",  SOURCE,  740, 420);  // источник, входящий в III.
-        n("I",  SOURCE,  410, 420);  // источник (буква I), входящий в V.
+        n("H",  SOURCE,  740, 420);
+        n("I",  SOURCE,  410, 420);
 
         // Потребители нижней части
         n("6",  CONSUMER, 1320, 570);
@@ -297,23 +287,19 @@ public class NetworkService {
         links.add(e("XVIII_5", "6",        4878.0));
         links.add(e("6",       "7",        4878.0));
 
-        // Добавляем все рёбра
         int idx = 1;
         for (String[] link : links) {
             addEdge(createEdge("E-" + idx++, link[0], link[1], link[2]));
         }
     }
 
-    // -----------------------------------------------------------------------
-    // Вспомогательные методы
-    // -----------------------------------------------------------------------
+ 
 
     private static final NetworkNode.NodeType SOURCE   = NetworkNode.NodeType.SOURCE;
     private static final NetworkNode.NodeType CONSUMER = NetworkNode.NodeType.CONSUMER;
     private static final NetworkNode.NodeType JUNCTION = NetworkNode.NodeType.JUNCTION;
     private static final NetworkNode.NodeType INTERMEDIATE = NetworkNode.NodeType.INTERMEDIATE;
 
-    /** Сокращённый вызов addNode */
     private void n(String id, NetworkNode.NodeType type, double x, double y) {
         addNode(createNode(id, type, x, y));
     }
