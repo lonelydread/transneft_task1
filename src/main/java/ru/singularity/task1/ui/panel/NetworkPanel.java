@@ -195,9 +195,13 @@ public class NetworkPanel extends JPanel {
 
 	private String nodeLabel(NetworkNode node) {
 		return switch (node.getType()) {
-			case SOURCE, CONSUMER, JUNCTION -> node.getId();
+			case SOURCE, CONSUMER, JUNCTION -> displayId(node.getId());
 			case INTERMEDIATE -> "";
 		};
+	}
+
+	private static String displayId(String id) {
+		return "I.1".equals(id) ? "I" : id;
 	}
 
 	private String edgeLabel(NetworkEdge edge) {
