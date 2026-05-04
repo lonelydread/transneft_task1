@@ -10,26 +10,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import ru.singularity.task1.model.OptimizationResult;
+import ru.singularity.task1.model.ShapResult;
 
 @Service
 @RequiredArgsConstructor
-public class OptimizationService {
+public class ShapService {
 
     private final RestTemplate restTemplate;
 
     @Value("${python.service.url}")
     private String pythonUrl;
 
-    public OptimizationResult optimize() {
-        return call("/api/optimize/ml");
-    }
-
-    public OptimizationResult optimizeLp() {
-        return call("/api/optimize/lp");
-    }
-
-    private OptimizationResult call(String endpoint) {
+    public ShapResult analyze() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 
@@ -38,6 +30,6 @@ public class OptimizationService {
         body.add("graph", new ClassPathResource("static/graph.csv"));
 
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
-        return restTemplate.postForObject(pythonUrl + endpoint, request, OptimizationResult.class);
+        return restTemplate.postForObject(pythonUrl + "/api/shap", request, ShapResult.class);
     }
 }
