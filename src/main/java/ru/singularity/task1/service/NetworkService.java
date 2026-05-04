@@ -1,5 +1,6 @@
 package ru.singularity.task1.service;
 
+import lombok.Getter;
 import org.jgrapht.graph.DefaultDirectedWeightedGraph;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.springframework.stereotype.Service;
@@ -7,42 +8,37 @@ import ru.singularity.task1.model.NetworkEdge;
 import ru.singularity.task1.model.NetworkNode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
 
 
 @Service
 public class NetworkService {
 
+    @Getter
     private final Map<String, NetworkNode> nodes = new ConcurrentHashMap<>();
+    @Getter
     private final Map<String, NetworkEdge> edges = new ConcurrentHashMap<>();
-    private final Random random = new Random();
 
     private DefaultDirectedWeightedGraph<String, DefaultWeightedEdge> graph =
             new DefaultDirectedWeightedGraph<>(DefaultWeightedEdge.class);
 
 
-    public NetworkNode addNode(NetworkNode node) {
+    public void addNode(NetworkNode node) {
         nodes.put(node.getId(), node);
         graph.addVertex(node.getId());
-        return node;
     }
 
-    public NetworkEdge addEdge(NetworkEdge edge) {
+    public void addEdge(NetworkEdge edge) {
         edges.put(edge.getId(), edge);
         graph.addVertex(edge.getFromNodeId());
         graph.addVertex(edge.getToNodeId());
         DefaultWeightedEdge e = graph.addEdge(edge.getFromNodeId(), edge.getToNodeId());
         if (e != null) graph.setEdgeWeight(e, edge.getCapacity());
-        return edge;
     }
 
     public NetworkNode getNode(String id)              { return nodes.get(id); }
-    public Map<String, NetworkNode> getNodes()         { return nodes; }
-    public Map<String, NetworkEdge> getEdges()         { return edges; }
 
     public void applyFlows(Map<String, Double> flows) {
         for (NetworkEdge edge : edges.values()) {
@@ -323,7 +319,7 @@ public class NetworkService {
         edge.setId(id);
         edge.setFromNodeId(from);
         edge.setToNodeId(to);
-        edge.setCapacity(Double.valueOf(capacity));
+        edge.setCapacity(Double.parseDouble(capacity));
         return edge;
     }
 
